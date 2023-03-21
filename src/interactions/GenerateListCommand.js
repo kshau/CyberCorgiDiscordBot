@@ -26,7 +26,7 @@ module.exports = class GenerateListCommand extends SlashCommand {
     var criteriaOption = interaction.options.getString("criteria");
 
     interaction.reply(message("**Loading...**"));
-    ChatGPTResponder.getResponse(`Generate a comma seperated list of 7 ${criteriaOption}. Don't number them.`).then(res => {
+    ChatGPTResponder.getResponse(`Generate a comma seperated list of 7 ${criteriaOption}. Don't number them. `).then(res => {
 
       res.json().then(json => {
 
