@@ -45,7 +45,7 @@ module.exports = class TalkLikeCommand extends SlashCommand {
         res.json().then(json => {
   
           var converted = json.choices[0].text.replaceAll("\n", "");
-          interaction.editReply(message(`\`${textOption}\`\n\n**"${converted}"** (__${personalityOption}__ified)`))
+          interaction.editReply(message(`\`${textOption}\`\n\n**"${converted}"** (__${personalityOption.replaceAll(" ", "")}__ified)`))
   
         })
   
