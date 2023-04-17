@@ -26,16 +26,16 @@ module.exports = class GenerateListCommand extends SlashCommand {
     var criteriaOption = interaction.options.getString("criteria");
 
     interaction.reply(message("**Loading...**"));
-    ChatGPTResponder.getResponse(`Generate a comma seperated list of 7 ${criteriaOption}. Don't number them. `).then(res => {
+    ChatGPTResponder.getResponse(`Generate a comma seperated list of 7 ${criteriaOption}. Don't number them. Only use numbers and letters no other symbols.`).then(res => {
 
       res.json().then(json => {
 
-        var msg = json.choices[0].text;
+        var msg = json.choices[0].text.replaceAll("\n", "");
         var split = msg.split(", ");
         var newMsg = "";
 
-        for (var i in split) {
-          newMsg += `\`${split[i].replaceAll("\n", "")}\`` + ((i == split.length - 1) ? ("") : (", "))
+        for (var i = 0; i <= 6; i++) {
+          newMsg += `\`${split[i]}\`` + ((i == 6) ? ("") : (", "))
         }
 
         interaction.editReply(message(`**${newMsg}**`));
