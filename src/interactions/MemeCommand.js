@@ -2,6 +2,7 @@ const SlashCommand = require('../utils/structures/SlashCommand');
 const { SlashCommandBuilder } = require("@discordjs/builders")
 
 const {fetch} = require("undici");
+const { message } = require('../utils/messages');
 
 module.exports = class MemeCommand extends SlashCommand {
   constructor() {
@@ -12,12 +13,15 @@ module.exports = class MemeCommand extends SlashCommand {
 
   async run(client, interaction) {
 
-    fetch(`https://meme-api.com/gimme/wholesomememes`).then(res => {
+    var memeSubreddits = ["wholesomememes", "memes", "cleanmemes", "funnymemes"];
+    var subreddit = memeSubreddits[Math.floor(Math.random()*memeSubreddits.length)];
+
+    fetch(`https://meme-api.com/gimme/${subreddit}`).then(res => {
 
       res.json().then(json => {
 
         var {url} = json;
-        interaction.reply(url);
+        interaction.reply({embeds: [{image: {url}, title: `From __r/${subreddit}__`}]});
 
       })
 
