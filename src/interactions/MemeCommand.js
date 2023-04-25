@@ -21,7 +21,7 @@ module.exports = class MemeCommand extends SlashCommand {
       res.json().then(json => {
 
         var {url} = json;
-        interaction.reply({embeds: [{image: {url}, title: `From __r/${subreddit}__`}]});
+        interaction.reply({embeds: [{image: {url}, title: `From __r/${subreddit}__`, color: "#3374ff"}]});
 
       })
 
