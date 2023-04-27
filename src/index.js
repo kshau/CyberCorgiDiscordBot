@@ -1,6 +1,7 @@
 require("dotenv").config()
 const { Client, Intents } = require('discord.js');
 const { registerCommands, registerEvents, registerSlashCommands } = require('./utils/registry');
+const { aiResponse } = require("./functions/AIResponse");
 
 const client = new Client({
   intents: [
@@ -19,4 +20,5 @@ const client = new Client({
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
   await client.login(process.env.TOKEN);
+  aiResponse(client);
 })();

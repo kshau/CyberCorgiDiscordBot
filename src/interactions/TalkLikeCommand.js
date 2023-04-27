@@ -40,7 +40,7 @@ module.exports = class TalkLikeCommand extends SlashCommand {
     else {
 
       interaction.reply(message("**Loading...**"));
-      ChatGPTResponder.getResponse(`Translate into ${personalityOption} using English characters in under 60 characters: ${textOption}.`).then(res => {
+      ChatGPTResponder.getResponse(`Translate into ${personalityOption} using English characters in under 60 characters: ${textOption}.`, 2048).then(res => {
   
         res.json().then(json => {
   
