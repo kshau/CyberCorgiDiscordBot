@@ -23,6 +23,7 @@ const client = new Client({
 
   client.on("error", (err) => {
     console.log(err);
+    console.log("error handled")
   })
 
   aiResponse(client);
