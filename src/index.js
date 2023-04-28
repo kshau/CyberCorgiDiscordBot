@@ -21,11 +21,13 @@ const client = new Client({
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
 
-  client.on("error", () => {
-    console.log("hi");
-  })
+  try {
+    await client.login(process.env.TOKEN);
+  }
 
-  await client.login(process.env.TOKEN);
+  catch(err) {
+    console.log("hi");
+  }
 
   aiResponse(client);
 })()
