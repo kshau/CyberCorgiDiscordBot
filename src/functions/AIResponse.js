@@ -33,7 +33,7 @@ function aiResponse(client) {
             }).then(res => {
 
                 async function createUser() {
-                    console.log(msg.author);
+                    
                     if (res == null) {
                         await conversationsCollection.insertOne({
                             "userId": msg.author.id, 
