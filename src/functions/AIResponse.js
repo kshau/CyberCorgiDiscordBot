@@ -59,7 +59,7 @@ function aiResponse(client) {
                             res.json().then(json => {
                 
                                 var botRes = (json.choices[0] != undefined) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
-                
+                                
                                 if (botRes != "") {
                                     msg.reply(botRes);
                                 }
@@ -82,6 +82,8 @@ function aiResponse(client) {
                                     "lastConversation": Date.now()
                                 })
                 
+                            }).catch(err => {
+                                console.log("hi")
                             })
                         })
                         
@@ -89,8 +91,6 @@ function aiResponse(client) {
 
                 })
                 
-            }).catch(err => {
-                console.log("hi")
             })
 
         }
