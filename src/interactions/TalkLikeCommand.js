@@ -43,9 +43,15 @@ module.exports = class TalkLikeCommand extends SlashCommand {
       ChatGPTResponder.getResponse(`Translate into ${personalityOption} using English characters in under 60 characters: ${textOption}.`, 2048).then(res => {
   
         res.json().then(json => {
-  
-          var converted = json.choices[0].text.replaceAll("\n", "");
-          interaction.editReply(message(`\`${textOption}\`\n\n**"${converted}"** (__${personalityOption.replaceAll(" ", "")}__ified)`))
+
+          if (json.choices != undefined && json.choices.length > 0) {
+            var converted = json.choices[0].text.replaceAll("\n", "");
+            interaction.editReply(message(`\`${textOption}\`\n\n**"${converted}"** (__${personalityOption.replaceAll(" ", "")}__ified)`))
+          }
+
+          else {
+            interaction.editReply(message(`**Sorry, a ChatGPT error occurred while running this command! :tired_face:**`, true));
+          }
   
         })
   

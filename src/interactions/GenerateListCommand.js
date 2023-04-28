@@ -25,7 +25,7 @@ module.exports = class GenerateListCommand extends SlashCommand {
 
     var criteriaOption = interaction.options.getString("criteria");
 
-    interaction.reply(message("**Loading...**"));
+    await interaction.reply(message("**Loading...**"));
     ChatGPTResponder.getResponse(`Generate a comma seperated list of 7 ${criteriaOption}. Don't number them. Only use numbers and letters no other symbols.`, 2048).then(res => {
 
       res.json().then(json => {
@@ -42,6 +42,10 @@ module.exports = class GenerateListCommand extends SlashCommand {
   
           interaction.editReply(message(`**${newMsg}**`));
 
+        }
+
+        else {
+          interaction.editReply(message(`**Sorry, a ChatGPT error occurred while running this command! :tired_face:**`, true));
         }
 
       })
