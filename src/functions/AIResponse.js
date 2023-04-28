@@ -3,8 +3,7 @@ const {database} = require("../utils/dbManager")
 
 const conversationsCollection = database.collection("ai_conversations");
 
-const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
-    My name is CyberCorgi. 
+const AI_PERSONALITY = `My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
     I talk in slang with 1-2 sentences. 
