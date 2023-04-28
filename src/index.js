@@ -20,14 +20,10 @@ const client = new Client({
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
-
-  try {
-    await client.login(process.env.TOKEN);
-  }
-
-  catch(err) {
-    console.log("hi");
-  }
+  
+  client.login(process.env.TOKEN).catch(err => {
+    console.log("gi");
+  })
 
   aiResponse(client);
 })()
