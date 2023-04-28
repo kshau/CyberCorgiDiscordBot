@@ -30,15 +30,19 @@ module.exports = class GenerateListCommand extends SlashCommand {
 
       res.json().then(json => {
 
-        var msg = json.choices[0].text.replaceAll("\n", "");
-        var split = msg.split(", ");
-        var newMsg = "";
+        if (json.choices != undefined && json.choices.length > 0) {
 
-        for (var i = 0; i <= 6; i++) {
-          newMsg += `\`${split[i]}\`` + ((i == 6) ? ("") : (", "))
+          var msg = json.choices[0].text.replaceAll("\n", "");
+          var split = msg.split(", ");
+          var newMsg = "";
+  
+          for (var i = 0; i <= 6; i++) {
+            newMsg += `\`${split[i]}\`` + ((i == 6) ? ("") : (", "))
+          }
+  
+          interaction.editReply(message(`**${newMsg}**`));
+
         }
-
-        interaction.editReply(message(`**${newMsg}**`));
 
       })
 
