@@ -34,12 +34,13 @@ function aiResponse(client) {
             }).then(res => {
 
                 async function createUser() {
+                    console.log(msg.author);
                     if (res == null) {
                         await conversationsCollection.insertOne({
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `Who are you? I am ${msg.author.name}.`,
+                                message: `Who are you? I am ${msg.author.username}.`,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
