@@ -47,6 +47,10 @@ function aiResponse(client) {
                             {
                                 sender: 'user',
                                 message: "Hi, CyberCorgi!",
+                            }, 
+                            {
+                                sender: 'bot',
+                                message: `Hi, ${msg.author.username}`,
                             }], 
                             "lastConversation": Date.now()
                         })
