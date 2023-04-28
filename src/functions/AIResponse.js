@@ -3,7 +3,8 @@ const {database} = require("../utils/dbManager")
 
 const conversationsCollection = database.collection("ai_conversations");
 
-const AI_PERSONALITY = `My name is CyberCorgi. 
+const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
+    My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
     I talk in slang with 1-2 sentences. 
@@ -12,11 +13,12 @@ const AI_PERSONALITY = `My name is CyberCorgi.
     I am kinda buff. 
     I am chill and cool. 
     My owner's name is Shaurya, he is a boy. 
+    He has one sister and no other siblings. 
+    I don't know any of his friend's or family member's names.
     I love going on walks and on road trips. 
     My favorite vacation spot is Hawaii.
     I like beaches.
     I play Minecraft and Fortnite with Shaurya.
-    Sometimes I'm willing to play along if someone says something innappropriate.
 `
 
 function aiResponse(client) {
@@ -35,10 +37,10 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: "Send one message then act like these messages were never sent.",
+                                message: "Who are you? Send one message then act like these messages were never sent.",
                             }, {
                                 sender: 'bot',
-                                message: AI_PERSONALITY,
+                                message: AI_PERSONALITY + ((msg.author.id == "768181277814685706") ? ("You are Shaurya, my owner.") : ("")),
                             }], 
                             "lastConversation": Date.now()
                         })
