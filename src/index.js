@@ -22,7 +22,7 @@ const client = new Client({
   await registerSlashCommands(client, '../interactions')
 
   process.on("uncaughtException", (err) => {
-    console.log(err.message);
+    console.log("Error: " + err.message);
   })
   
   await client.login(process.env.TOKEN);
