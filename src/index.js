@@ -24,6 +24,10 @@ const client = new Client({
   process.on("uncaughtException", (err) => {
     console.log("Error: " + err.message);
   })
+
+  process.on("unhandledRejection", (err) => {
+    console.log("Error: " + err.message);
+  })
   
   await client.login(process.env.TOKEN);
 
