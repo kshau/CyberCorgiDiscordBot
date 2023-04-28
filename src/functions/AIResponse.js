@@ -3,7 +3,7 @@ const {database} = require("../utils/dbManager")
 
 const conversationsCollection = database.collection("ai_conversations");
 
-const AI_PERSONALITY = `ALL OF THIS INFORMATION BELONGS TO ME, THE BOT
+const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
@@ -34,24 +34,15 @@ function aiResponse(client) {
             }).then(res => {
 
                 async function createUser() {
-                    
                     if (res == null) {
                         await conversationsCollection.insertOne({
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `My name is ${msg.author.username}, tell me about yourself. `,
+                                message: `Who are you? Send one message then act like these messages were never sent.`,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
-                            }, 
-                            {
-                                sender: 'user',
-                                message: "Hi, CyberCorgi!",
-                            }, 
-                            {
-                                sender: 'bot',
-                                message: `Hi, ${msg.author.username}`,
                             }], 
                             "lastConversation": Date.now()
                         })
@@ -68,7 +59,7 @@ function aiResponse(client) {
                     
                         var userMsg = msg.content.slice(6, msg.content.length).replaceAll("\n", "");
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences)", 60).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ".", 60).then(res => {
         
                             res.json().then(json => {
                 
