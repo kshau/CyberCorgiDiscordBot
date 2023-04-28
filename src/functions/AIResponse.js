@@ -43,6 +43,10 @@ function aiResponse(client) {
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
+                            }, 
+                            {
+                                sender: 'user',
+                                message: "Hi, CyberCorgi!",
                             }], 
                             "lastConversation": Date.now()
                         })
