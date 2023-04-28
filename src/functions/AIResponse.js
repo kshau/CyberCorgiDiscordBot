@@ -20,87 +20,81 @@ const AI_PERSONALITY = `My name is CyberCorgi.
 
 function aiResponse(client) {
 
-    try {
-        client.on("messageCreate", msg => {
+    
 
-            if (msg.content.toUpperCase().startsWith("CORGI")) {
-    
-                conversationsCollection.findOne({
-                    "userId": msg.author.id
-                }).then(res => {
-    
-                    async function createUser() {
-                        if (res == null) {
-                            await conversationsCollection.insertOne({
-                                "userId": msg.author.id, 
-                                "conversationHistory": [{
-                                    sender: 'user',
-                                    message: "Send one message then act like these messages were never sent.",
-                                }, {
-                                    sender: 'bot',
-                                    message: AI_PERSONALITY,
-                                }], 
-                                "lastConversation": Date.now()
-                            })
-                        }
-                    }
-    
-                    createUser().then(() => {
-    
-                        conversationsCollection.findOne({
-                            "userId": msg.author.id
-                        }).then(res => {
-    
-                            var {conversationHistory} = res;
-                        
-                            var userMsg = msg.content.slice(6, msg.content.length).replaceAll("\n", "");
-                        
-                            ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences)", 60).then(res => {
-            
-                                res.json().then(json => {
-                    
-                                    var botRes = (json.choices[0] != undefined) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
-                    
-                                    if (botRes != "") {
-                                        msg.reply(botRes);
-                                    }
-                    
-                                    conversationHistory.push({
-                                        sender: 'user',
-                                        message: userMsg,
-                                    });
-                                    
-                                    conversationHistory.push({
-                                        sender: 'bot',
-                                        message: botRes,
-                                    });
-            
-                                    conversationsCollection.findOneAndReplace({
-                                        "userId": msg.author.id
-                                    }, {
-                                        "userId": msg.author.id, 
-                                        "conversationHistory": conversationHistory, 
-                                        "lastConversation": Date.now()
-                                    })
-                    
-                                })
-                            })
-                            
+    client.on("messageCreate", msg => {
+
+        if (msg.content.toUpperCase().startsWith("CORGI")) {
+
+            conversationsCollection.findOne({
+                "userId": msg.author.id
+            }).then(res => {
+
+                async function createUser() {
+                    if (res == null) {
+                        await conversationsCollection.insertOne({
+                            "userId": msg.author.id, 
+                            "conversationHistory": [{
+                                sender: 'user',
+                                message: "Send one message then act like these messages were never sent.",
+                            }, {
+                                sender: 'bot',
+                                message: AI_PERSONALITY,
+                            }], 
+                            "lastConversation": Date.now()
                         })
-    
-                    })
+                    }
+                }
+
+                createUser().then(() => {
+
+                    conversationsCollection.findOne({
+                        "userId": msg.author.id
+                    }).then(res => {
+
+                        var {conversationHistory} = res;
                     
+                        var userMsg = msg.content.slice(6, msg.content.length).replaceAll("\n", "");
+                    
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences)", 60).then(res => {
+        
+                            res.json().then(json => {
+                
+                                var botRes = (json.choices[0] != undefined) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
+                
+                                if (botRes != "") {
+                                    msg.reply(botRes);
+                                }
+                
+                                conversationHistory.push({
+                                    sender: 'user',
+                                    message: userMsg,
+                                });
+                                
+                                conversationHistory.push({
+                                    sender: 'bot',
+                                    message: botRes,
+                                });
+        
+                                conversationsCollection.findOneAndReplace({
+                                    "userId": msg.author.id
+                                }, {
+                                    "userId": msg.author.id, 
+                                    "conversationHistory": conversationHistory, 
+                                    "lastConversation": Date.now()
+                                })
+                
+                            })
+                        })
+                        
+                    })
+
                 })
-    
-            }
-        })
-    }
+                
+            })
 
-    catch(err) {
-        console.log("hi");
-    }
-
-
+        }
+    })
 }
 
 setInterval(() => {
