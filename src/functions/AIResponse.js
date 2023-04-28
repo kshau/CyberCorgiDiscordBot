@@ -82,8 +82,6 @@ function aiResponse(client) {
                                     "lastConversation": Date.now()
                                 })
                 
-                            }).catch(err => {
-                                console.log("hi")
                             })
                         })
                         
