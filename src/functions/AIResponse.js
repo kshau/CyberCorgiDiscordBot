@@ -58,7 +58,7 @@ function aiResponse(client) {
         
                             res.json().then(json => {
                 
-                                var botRes = (json.choices.length > 0) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
+                                var botRes = (json.choices != undefined && json.choices.length > 0) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
                                 
                                 if (botRes != "") {
                                     msg.reply(botRes);
