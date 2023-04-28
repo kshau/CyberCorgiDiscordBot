@@ -12,7 +12,7 @@
   "keywords": [],
   "author": "kshaurya731",
   "license": "ISC",
-  "discordPermissions": "139589897280",
+  "permissions": "139589963328",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
