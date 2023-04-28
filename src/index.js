@@ -2,7 +2,6 @@ require("dotenv").config()
 const { Client, Intents } = require('discord.js');
 const { registerCommands, registerEvents, registerSlashCommands } = require('./utils/registry');
 const { aiResponse } = require("./functions/AIResponse");
-const { error } = require("makecord/src/Logger");
 
 const client = new Client({
   intents: [
@@ -11,10 +10,6 @@ const client = new Client({
     Intents.FLAGS.GUILD_MEMBERS
   ]
 });
-
-client.on("error", () => {
-  console.log("hi");
-})
 
 (async () => {
   client.commands = new Map();
@@ -25,6 +20,10 @@ client.on("error", () => {
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
+
+  client.on("error", () => {
+    console.log("hi");
+  })
 
   await client.login(process.env.TOKEN);
 
