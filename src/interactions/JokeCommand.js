@@ -18,7 +18,13 @@ module.exports = class JokeCommand extends SlashCommand {
       res.json().then(json => {
 
         var {setup, punchline} = json;
-        interaction.reply(message(`**${setup}**\n\n||${punchline} :rofl:||`));
+
+        if (Math.random() < 0.01) {
+          interaction.reply(message(`**You! Nah I'm just messin' :rofl:**`));
+        }
+        else {
+          interaction.reply(message(`**${setup}**\n\n||${punchline} :rofl:||`));
+        }
 
       })
 
