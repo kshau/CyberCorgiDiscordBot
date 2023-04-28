@@ -39,7 +39,7 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `Who are you? I am ${msg.author.username}.`,
+                                message: `I am ${msg.author.username}, but who are you? `,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
