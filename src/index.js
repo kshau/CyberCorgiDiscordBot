@@ -20,6 +20,10 @@ const client = new Client({
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
+
+  process.on("uncaughtException", (err) => {
+    console.log(err.message);
+  })
   
   await client.login(process.env.TOKEN);
 
