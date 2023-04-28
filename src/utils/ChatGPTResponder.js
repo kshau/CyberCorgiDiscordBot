@@ -15,7 +15,6 @@ class ChatGPTResponder {
             },
             method: "POST"
             }).then(res => {
-                console.log(res);
                 return res;
             })
     
