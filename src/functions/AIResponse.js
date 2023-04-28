@@ -39,7 +39,7 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `Who are you? Send one message then act like these messages were never sent.`,
+                                message: `Who are you? My name is ${msg.author.username}. Send one message then act like these messages were never sent.`,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
