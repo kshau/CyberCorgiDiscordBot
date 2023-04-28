@@ -34,6 +34,7 @@ function aiResponse(client) {
             }).then(res => {
 
                 async function createUser() {
+
                     if (res == null) {
                         await conversationsCollection.insertOne({
                             "userId": msg.author.id, 
@@ -43,6 +44,12 @@ function aiResponse(client) {
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
+                            }, {
+                                sender: 'user',
+                                message: `Hi!`,
+                            }, {
+                                sender: 'bot',
+                                message: "Hi!",
                             }], 
                             "lastConversation": Date.now()
                         })
