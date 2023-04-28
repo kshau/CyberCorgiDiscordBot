@@ -20,6 +20,8 @@ const client = new Client({
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
+  
+  await client.login(process.env.TOKEN);
 
   aiResponse(client);
 })()
