@@ -11,15 +11,16 @@ const client = new Client({
   ]
 });
 
-client.on("error", (err) => {
-  console.log("error handled")
-})
-
 (async () => {
   client.commands = new Map();
   client.slashCommands = new Map();
   client.events = new Map();
   client.prefix = process.env.PREFIX;
+
+  client.on("error", (err) => {
+    console.log("error handled")
+  })
+
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
