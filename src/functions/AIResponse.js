@@ -3,7 +3,7 @@ const {database} = require("../utils/dbManager")
 
 const conversationsCollection = database.collection("ai_conversations");
 
-const AI_PERSONALITY = `
+const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
@@ -40,10 +40,10 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `My name is ${msg.author.username}.`,
+                                message: `Who are you? My name is ${msg.author.username}. Send one message then act like these messages were never sent.`,
                             }, {
                                 sender: 'bot',
-                                message: "Oh that's cool! Here is a bit about me: " + AI_PERSONALITY,
+                                message: AI_PERSONALITY,
                             }], 
                             "lastConversation": Date.now()
                         })
