@@ -22,7 +22,6 @@ const client = new Client({
   await client.login(process.env.TOKEN);
 
   client.on("error", (err) => {
-    console.log(err);
     console.log("error handled")
   })
 
