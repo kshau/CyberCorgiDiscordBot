@@ -12,6 +12,10 @@ const client = new Client({
   ]
 });
 
+client.on("error", () => {
+  console.log("hi");
+})
+
 (async () => {
   client.commands = new Map();
   client.slashCommands = new Map();
@@ -21,11 +25,8 @@ const client = new Client({
   await registerCommands(client, '../commands');
   await registerEvents(client, '../events');
   await registerSlashCommands(client, '../interactions')
-  await client.login(process.env.TOKEN);
 
-  await client.on("error", () => {
-    console.log("hi");
-  })
+  await client.login(process.env.TOKEN);
 
   aiResponse(client);
 })()
