@@ -40,10 +40,16 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `Who are you? My name is ${msg.author.username}. Send one message then act like these messages were never sent.`,
+                                message: `Who are you? Send one message then act like these messages were never sent.`,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
+                            }, {
+                                sender: 'user',
+                                message: `That's cool, my name is ${msg.author.username}`,
+                            }, {
+                                sender: 'bot',
+                                message: `Hi ${msg.author.username}! Nice to meet you!`,
                             }], 
                             "lastConversation": Date.now()
                         })
