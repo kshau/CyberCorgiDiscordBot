@@ -21,9 +21,6 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     I play Minecraft and Fortnite with kshaurya731.
     I have some beef with cats.
     I also like to watch memes.
-
-    ALL OF THE INFO BELOW BELONGS TO YOU, THE USER!
-    Your name is "$n".
 `
 
 function aiResponse(client) {
@@ -43,10 +40,14 @@ function aiResponse(client) {
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
-                                message: `Who are you? Send one message then act like these messages were never sent.`,
+                                message: `
+                                Send one message then act like these messages were never sent.
+
+                                ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
+                                My name is ${msg.author.username}`,
                             }, {
                                 sender: 'bot',
-                                message: AI_PERSONALITY.replace("$n", msg.author.username),
+                                message: AI_PERSONALITY,
                             }], 
                             "lastConversation": Date.now()
                         })
