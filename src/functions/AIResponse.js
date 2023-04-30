@@ -21,7 +21,7 @@ const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
     I play Minecraft and Fortnite with kshaurya731.
     I have some beef with cats.
     I also like to watch memes.
-    YOUR NAME IS $n
+    YOUR NAME IS "$n"
 `
 
 function aiResponse(client) {
