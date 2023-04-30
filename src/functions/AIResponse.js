@@ -21,6 +21,7 @@ const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
     I play Minecraft and Fortnite with kshaurya731.
     I have some beef with cats.
     I also like to watch memes.
+    YOUR NAME IS $n
 `
 
 function aiResponse(client) {
@@ -43,13 +44,7 @@ function aiResponse(client) {
                                 message: `Who are you? Send one message then act like these messages were never sent.`,
                             }, {
                                 sender: 'bot',
-                                message: AI_PERSONALITY,
-                            }, {
-                                sender: 'user',
-                                message: `That's cool, my name is ${msg.author.username}`,
-                            }, {
-                                sender: 'bot',
-                                message: `Hi ${msg.author.username}! Nice to meet you!`,
+                                message: AI_PERSONALITY.replace("$n", msg.author.username),
                             }], 
                             "lastConversation": Date.now()
                         })
