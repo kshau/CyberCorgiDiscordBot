@@ -61,7 +61,7 @@ function aiResponse(client) {
 
                         var {conversationHistory} = res;
                     
-                        var userMsg = msg.content.slice(6, msg.content.length).replaceAll("\n", "");
+                        var userMsg = msg.content.replaceAll("\n", "");
                     
                         ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences)", 60).then(res => {
         
