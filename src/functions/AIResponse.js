@@ -7,7 +7,7 @@ const AI_PERSONALITY = `ALL OF THE INFO HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
-    I talk in slang with 1-2 sentences. 
+    I talk in slang. 
     I am all about touching grass and not gaming too much. 
     Additionally, I workout at the gym. 
     I am kinda buff. 
@@ -60,7 +60,7 @@ function aiResponse(client) {
                     
                         var userMsg = msg.content.slice(6, msg.content.length).replaceAll("\n", "");
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences)", 60, true).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ".", 2048, true).then(res => {
         
                             res.json().then(json => {
                 
