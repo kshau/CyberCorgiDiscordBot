@@ -2,9 +2,7 @@ const {EMBED_COLOR} = process.env;
 
 function message(content, ephemeral) {
 
-    if (ephemeral == undefined) {
-        ephemeral = false;
-    }
+    ephemeral = (ephemeral == undefined) ? (false) : (true);
 
     var embed = {description: content, color: EMBED_COLOR};
 
@@ -13,4 +11,15 @@ function message(content, ephemeral) {
 
 }
 
-module.exports = {message};
+function image(url, title, ephemeral) {
+
+    ephemeral = (ephemeral == undefined) ? (false) : (true);
+
+    var embed = {image: {url}, title: title, color: EMBED_COLOR};
+
+    var msg = {embeds: [embed], ephemeral: ephemeral};
+    return msg;
+
+}
+
+module.exports = {message, image};

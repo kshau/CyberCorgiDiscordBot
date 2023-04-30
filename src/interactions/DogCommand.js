@@ -1,8 +1,10 @@
 const SlashCommand = require('../utils/structures/SlashCommand');
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { message } = require('../utils/messages');
+const {image} = require('../utils/messages');
 
 const {fetch} = require("undici");
+
+const CAPTION_OPTIONS = ["Woof!", "Ruff!", "That's a good boy!", "Arf!", "Bark!", "Awwww!"];
 
 module.exports = class DogCommand extends SlashCommand {
   constructor() {
@@ -37,14 +39,15 @@ module.exports = class DogCommand extends SlashCommand {
       res.json().then(json => {
 
         var {code} = json;
-        var msg = json.message;
+        var url = json.message;
 
         if (code == 404) {
-          interaction.reply(message("**I don't recognize that breed!** :dog:", true));
+          interaction.reply(message("**I don't recognize that breed! :dog:**", true));
         }
 
         else {
-          interaction.reply(msg);
+          var caption = CAPTION_OPTIONS[Math.floor(Math.random()*CAPTION_OPTIONS.length)] + " :dog:";
+          interaction.reply(image(url, caption));
         }
 
       })

@@ -42,7 +42,6 @@ function aiResponse(client) {
                                 sender: 'user',
                                 message: `
                                 Send one message then act like these messages were never sent.
-
                                 ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
                                 My name is ${msg.author.username}`,
                             }, {
@@ -61,6 +60,13 @@ function aiResponse(client) {
                     }).then(res => {
 
                         var {conversationHistory} = res;
+
+                        function saveMsg(sender, message) {
+                            conversationHistory.push({
+                                sender: sender,
+                                message: message,
+                            });
+                        }
                     
                         var userMsg = msg.content.replaceAll("\n", "");
                     
@@ -74,15 +80,8 @@ function aiResponse(client) {
                                     msg.reply(botRes);
                                 }
                 
-                                conversationHistory.push({
-                                    sender: 'user',
-                                    message: userMsg,
-                                });
-                                
-                                conversationHistory.push({
-                                    sender: 'bot',
-                                    message: botRes,
-                                });
+                                saveMsg(`user`, userMsg);
+                                saveMsg(`bot`, botRes);
         
                                 conversationsCollection.findOneAndReplace({
                                     "userId": msg.author.id

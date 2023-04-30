@@ -45,16 +45,24 @@ module.exports = class QuoteCommand extends SlashCommand {
     else {
 
       interaction.reply(message("**Loading...**"));
-      ChatGPTResponder.getResponse(`Tell me a random quote relating to ${keywordOption}. Seperate the quote and the author with a ::.`).then(res => {
+      ChatGPTResponder.getResponse(`Tell me a random quote relating to ${keywordOption}. Seperate the quote and the author with a ##.`, 2048).then(res => {
   
         res.json().then(json => {
-          
-          var quote = json.choices[0].text;
-          var split = quote.split("::");
-          var quoteText = split[0].replaceAll("\n", "");
-          var quoteAuthor = split[1];
-  
-          interaction.editReply(message(`**${quoteText}**\n\n~ ${quoteAuthor}`));
+
+          if (json.choices != undefined && json.choices.length > 0) {
+
+            var quote = json.choices[0].text.replaceAll("\n", "");
+            var split = quote.split("##");
+            var quoteText = split[0];
+            var quoteAuthor = split[1];
+
+            interaction.editReply(message(`**${quoteText}${(quoteText.slice(-1) == "\"") ? ("") : ("\"")}**\n\n~ ${quoteAuthor}`));
+
+          }
+
+          else {
+            interaction.editReply(message(`**Sorry, a ChatGPT error occurred while running this command! :tired_face:**`, true));
+          }
   
         })
   
