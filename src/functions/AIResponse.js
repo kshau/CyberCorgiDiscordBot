@@ -1,7 +1,7 @@
 const { ChatGPTResponder } = require("../utils/ChatGPTResponder")
 const {database} = require("../utils/dbManager")
 
-const conversationsCollection = database.collection("ai_conversations");
+const CONV_COLLECTION = database.collection("ai_conversations");
 
 const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
@@ -23,20 +23,22 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     I also like to watch memes.
 `
 
+const {CLIENT_ID} = process.env;
+
 function aiResponse(client) {
 
     client.on("messageCreate", msg => {
 
-        if (msg.content.toUpperCase().startsWith("CORGI")) {
+        if (msg.content.toUpperCase().startsWith("CORGI") && msg.author.id != CLIENT_ID) {
 
-            conversationsCollection.findOne({
+            CONV_COLLECTION.findOne({
                 "userId": msg.author.id
             }).then(res => {
 
                 async function createUser() {
 
                     if (res == null) {
-                        await conversationsCollection.insertOne({
+                        await CONV_COLLECTION.insertOne({
                             "userId": msg.author.id, 
                             "conversationHistory": [{
                                 sender: 'user',
@@ -55,7 +57,7 @@ function aiResponse(client) {
 
                 createUser().then(() => {
 
-                    conversationsCollection.findOne({
+                    CONV_COLLECTION.findOne({
                         "userId": msg.author.id
                     }).then(res => {
 
@@ -70,7 +72,7 @@ function aiResponse(client) {
                     
                         var userMsg = msg.content.replaceAll("\n", "");
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(6) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
         
                             res.json().then(json => {
                 
@@ -83,7 +85,7 @@ function aiResponse(client) {
                                 saveMsg(`user`, userMsg);
                                 saveMsg(`bot`, botRes);
         
-                                conversationsCollection.findOneAndReplace({
+                                CONV_COLLECTION.findOneAndReplace({
                                     "userId": msg.author.id
                                 }, {
                                     "userId": msg.author.id, 
@@ -104,11 +106,11 @@ function aiResponse(client) {
     })
 }
 
-setInterval(() => {
-    conversationsCollection.find({}).toArray().then(res => {
+var historyDeletion = setInterval(() => {
+    CONV_COLLECTION.find({}).toArray().then(res => {
         for (var i in res) {
             if (res[i].lastConversation < (Date.now() - 600000)) {
-                conversationsCollection.deleteOne({
+                CONV_COLLECTION.deleteOne({
                     "userId": res[i].userId
                 })
             }
