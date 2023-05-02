@@ -23,6 +23,8 @@ module.exports = class HelpCommand extends SlashCommand {
 
     }
 
+    content += "\nTalk using `corgi` at the beginning of sentences in a server to have me reply!"
+
     var sendMsg = message(content);
     sendMsg["content"] = ":dog: **CyberCorgi**";
 
