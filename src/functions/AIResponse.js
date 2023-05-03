@@ -76,6 +76,7 @@ function aiResponse(client) {
                         ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(6) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
         
                             res.json().then(json => {
+                                console.log(json);
                 
                                 var botRes = (json.choices != undefined && json.choices.length > 0) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
 
