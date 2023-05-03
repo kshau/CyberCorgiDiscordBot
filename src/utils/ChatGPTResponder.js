@@ -6,11 +6,11 @@ class ChatGPTResponder {
 
     static async getResponse(q, maxTokens) {
         
-        return fetch(`https://api.openai.com/v1/completions`, {
+        return fetch(`https://api.pawan.krd/v1/completions`, {
 
             body: JSON.stringify({model: "text-davinci-003", prompt: q, temperature: 0, max_tokens: maxTokens}),
             headers: {
-                "authorization": `Bearer ${GPT_API_KEY}`,
+                "authorization": `Bearer ${GPT_API_KEY} `,
                 "content-type": "application/json"
             },
             method: "POST"
