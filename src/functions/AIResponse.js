@@ -40,7 +40,9 @@ function aiResponse(client) {
 
     client.on("messageCreate", msg => {
 
-        if (msg.content.toUpperCase().startsWith("CORGI") && msg.author.id != CLIENT_ID) {
+        var formattedMsg = msg.cleanContent.toUpperCase().replace(/[^\x00-\x7F]/g, "");
+
+        if ((formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI")) && msg.author.id != CLIENT_ID) {
 
             CONV_COLLECTION.findOne({
                 "userId": msg.author.id
@@ -82,9 +84,9 @@ function aiResponse(client) {
                             });
                         }
                     
-                        var userMsg = msg.content.replaceAll("\n", "");
+                        var userMsg = msg.cleanContent.replaceAll("\n", "");
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(6) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
         
                             res.json().then(json => {
                 
