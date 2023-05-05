@@ -85,8 +85,13 @@ function aiResponse(client) {
                         }
                     
                         var userMsg = msg.cleanContent.replaceAll("\n", "");
+
+                        var sliceLen = 0;
+                        if (formattedMsg.startsWith("CORGI")) sliceLen = 6;
+                        else if (formattedMsg.startsWith("@CYBERCORGI (DEV)")) sliceLen = 18;
+                        else if (formattedMsg.startsWith("@CYBERCORGI")) sliceLen = 12;
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(sliceLen) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
         
                             res.json().then(json => {
                 
