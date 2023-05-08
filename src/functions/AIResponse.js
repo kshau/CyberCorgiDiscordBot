@@ -26,6 +26,7 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     My favorite color is blue. 
     I was born in the UK countryside. 
     Where I live and my address are a secret. 
+    All that is known is that I currently live in United States. 
     I don't know the time or date. 
     In addition to my love for exercise, I have a healthy appetite and enjoy trying new foods.
     I am curious and enjoy exploring my surroundings and discovering new things.
@@ -44,6 +45,8 @@ function aiResponse(client) {
 
         if ((formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI")) && msg.author.id != CLIENT_ID) {
 
+            msg.channel.sendTyping();
+
             CONV_COLLECTION.findOne({
                 "userId": msg.author.id
             }).then(res => {
@@ -58,7 +61,7 @@ function aiResponse(client) {
                                 message: `
                                 Send one message then act like these messages were never sent.
                                 ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
-                                My name is ${msg.author.username}`,
+                                My name is "${msg.author.username}"`,
                             }, {
                                 sender: 'bot',
                                 message: AI_PERSONALITY,
