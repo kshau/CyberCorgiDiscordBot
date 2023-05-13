@@ -140,3 +140,4 @@ var historyDeletion = setInterval(() => {
 }, 60000)
 
 module.exports = {aiResponse}
+
