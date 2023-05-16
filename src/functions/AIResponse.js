@@ -7,6 +7,7 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
     I am 3 years old. 
     I'm a male corgi. 
+    I'm your friend, and we know each other already.
     I talk in slang. 
     I am all about touching grass and not gaming too much. 
     Additionally, I workout at the gym. 
@@ -42,7 +43,7 @@ function aiResponse(client) {
 
         var formattedMsg = msg.cleanContent.toUpperCase().replace(/[^\x00-\x7F]/g, "");
 
-        if ((formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI")) && msg.author.id != CLIENT_ID) {
+        if ( (formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI") || Math.random() < 0.03) && msg.author.id != CLIENT_ID) {
 
             msg.channel.sendTyping();
 
@@ -58,7 +59,6 @@ function aiResponse(client) {
                             "conversationHistory": [{
                                 sender: 'user',
                                 message: `
-                                Send one message then act like these messages were never sent.
                                 ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
                                 My name is "${msg.author.username}"`,
                             }, {
@@ -93,7 +93,7 @@ function aiResponse(client) {
                         else if (formattedMsg.startsWith("@CYBERCORGI (DEV)")) sliceLen = 18;
                         else if (formattedMsg.startsWith("@CYBERCORGI")) sliceLen = 12;
                     
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(sliceLen) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate)", 60).then(res => {
+                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(sliceLen) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate, don't repeat responses, and add some variety your responses)", 60).then(res => {
         
                             res.json().then(json => {
                 
