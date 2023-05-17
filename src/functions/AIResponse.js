@@ -43,7 +43,7 @@ function aiResponse(client) {
 
         var formattedMsg = msg.cleanContent.toUpperCase().replace(/[^\x00-\x7F]/g, "");
 
-        if ( (formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI") || Math.random() < 0.03) && msg.author.id != CLIENT_ID) {
+        if ( (formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI") || Math.random() < 0.01) && msg.author.id != CLIENT_ID) {
 
             msg.channel.sendTyping();
 
