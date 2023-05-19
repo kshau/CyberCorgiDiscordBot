@@ -9,7 +9,7 @@ module.exports = class GenerateListCommand extends SlashCommand {
     super(new SlashCommandBuilder()
 
       .setName("generatelist")
-      .setDescription("Generates a list based on criteria you give!")
+      .setDescription("Generates a list based on criteria you give! :pencil:")
 
       .addStringOption(option => {
         return option

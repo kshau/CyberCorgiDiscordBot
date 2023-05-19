@@ -8,7 +8,7 @@ module.exports = class TruthOrDareCommand extends SlashCommand {
   constructor() {
     super(new SlashCommandBuilder()
     .setName("truthordare")
-    .setDescription("Asks a random truth or dare question!")
+    .setDescription("Asks a random truth or dare question! :thinking:")
     .addStringOption(option => {
       return option
         .setName("type")
