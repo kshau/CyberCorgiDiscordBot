@@ -2,6 +2,7 @@ require("dotenv").config()
 const { Client, Intents } = require('discord.js');
 const { registerCommands, registerEvents, registerSlashCommands } = require('./utils/registry');
 const { aiResponse } = require("./functions/AIResponse");
+const { wordChain } = require("./functions/WordChain");
 
 const client = new Client({
   intents: [
@@ -32,4 +33,5 @@ const client = new Client({
   await client.login(process.env.TOKEN);
 
   aiResponse(client);
+  wordChain(client);
 })()

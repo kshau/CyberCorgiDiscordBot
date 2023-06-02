@@ -34,7 +34,7 @@ module.exports = class TruthOrDareCommand extends SlashCommand {
         var typeOption = interaction.options.getString("type");
         
         var chosenType = (typeOption == "random") ? ((Math.random() > 0.5) ? ("truth") : ("dare")) : (typeOption);
-        var fullArray = json[chosenType + "s"]
+        var fullArray = json[chosenType + "s"];
         interaction.reply(message(`**${chosenType.charAt(0).toUpperCase() + chosenType.slice(1)}:** ${fullArray[Math.floor(Math.random()*fullArray.length)]}`));
 
       })

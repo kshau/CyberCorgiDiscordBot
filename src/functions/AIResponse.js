@@ -2,6 +2,7 @@ const { ChatGPTResponder } = require("../utils/ChatGPTResponder")
 const {database} = require("../utils/dbManager")
 
 const CONV_COLLECTION = database.collection("ai_conversations");
+const WORD_CHAIN_COLLECTION = database.collection("word_chain");
 
 const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 
@@ -9,6 +10,7 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     I'm a male corgi. 
     I'm your friend, and we know each other already.
     I talk in slang. 
+    I will roast you if you be mean to me. 
     I am all about touching grass and not gaming too much. 
     Additionally, I workout at the gym. 
     I am kinda buff. 
@@ -44,87 +46,92 @@ function aiResponse(client) {
 
         var formattedMsg = msg.cleanContent.toUpperCase().replace(/[^\x00-\x7F]/g, "");
 
-        if ( (formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI") || Math.random() < 0.01) && msg.author.id != CLIENT_ID) {
+        WORD_CHAIN_COLLECTION.findOne({channelId: msg.channel.id}).then(res => {
 
-            msg.channel.sendTyping();
+            if ( (formattedMsg.startsWith("CORGI") || formattedMsg.startsWith("@CYBERCORGI") || Math.random() < 0.01) && msg.author.id != CLIENT_ID && res == null) {
 
-            CONV_COLLECTION.findOne({
-                "userId": msg.author.id
-            }).then(res => {
-
-                async function createUser() {
-
-                    if (res == null) {
-                        await CONV_COLLECTION.insertOne({
-                            "userId": msg.author.id, 
-                            "conversationHistory": [{
-                                sender: 'user',
-                                message: `
-                                ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
-                                My name is "${msg.author.username}"`,
-                            }, {
-                                sender: 'bot',
-                                message: AI_PERSONALITY,
-                            }], 
-                            "lastConversation": Date.now()
-                        })
-                    }
-                }
-
-                createUser().then(() => {
-
-                    CONV_COLLECTION.findOne({
-                        "userId": msg.author.id
-                    }).then(res => {
-
-                        var {conversationHistory} = res;
-                        
-
-                        function saveMsg(sender, message) {
-                            conversationHistory.push({
-                                sender: sender,
-                                message: message,
-                            });
-                        }
-                    
-                        var userMsg = msg.cleanContent.replaceAll("\n", "");
-
-                        var sliceLen = 0;
-                        if (formattedMsg.startsWith("CORGI")) sliceLen = 6;
-                        else if (formattedMsg.startsWith("@CYBERCORGI (DEV)")) sliceLen = 18;
-                        else if (formattedMsg.startsWith("@CYBERCORGI")) sliceLen = 12;
-                    
-                        ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(sliceLen) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate, don't repeat responses, and add some variety your responses)", 60).then(res => {
-        
-                            res.json().then(json => {
-                                
-                                var botRes = (json.choices != undefined && json.choices.length > 0) ? (json.choices[0].text.replaceAll("\n", "")) : ("");
-
-                                if (botRes != "") {
-                                    msg.reply(botRes);
-                                }
-                
-                                saveMsg(`user`, userMsg);
-                                saveMsg(`bot`, botRes);
-        
-                                CONV_COLLECTION.findOneAndReplace({
-                                    "userId": msg.author.id
+                msg.channel.sendTyping();
+    
+                CONV_COLLECTION.findOne({
+                    "userId": msg.author.id
+                }).then(res => {
+    
+                    async function createUser() {
+    
+                        if (res == null) {
+                            await CONV_COLLECTION.insertOne({
+                                "userId": msg.author.id, 
+                                "conversationHistory": [{
+                                    sender: 'user',
+                                    message: `
+                                    ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
+                                    My name is "${msg.author.username}"`,
                                 }, {
-                                    "userId": msg.author.id, 
-                                    "conversationHistory": conversationHistory, 
-                                    "lastConversation": Date.now()
-                                })
-                
+                                    sender: 'bot',
+                                    message: AI_PERSONALITY,
+                                }], 
+                                "lastConversation": Date.now()
                             })
-                        })
+                        }
+                    }
+    
+                    createUser().then(() => {
+    
+                        CONV_COLLECTION.findOne({
+                            "userId": msg.author.id
+                        }).then(res => {
+    
+                            var {conversationHistory} = res;
+                            
+    
+                            function saveMsg(sender, message) {
+                                conversationHistory.push({
+                                    sender: sender,
+                                    message: message,
+                                });
+                            }
                         
+                            var userMsg = msg.cleanContent.replaceAll("\n", "");
+    
+                            var sliceLen = 0;
+                            if (formattedMsg.startsWith("CORGI")) sliceLen = 6;
+                            else if (formattedMsg.startsWith("@CYBERCORGI (DEV)")) sliceLen = 18;
+                            else if (formattedMsg.startsWith("@CYBERCORGI")) sliceLen = 12;
+                        
+                            ChatGPTResponder.getResponse(conversationHistory.map(m => m.message).join('\n') + '\n' + userMsg.slice(sliceLen) + ". (reply in 1-2 sentences, occasionally use some emojis where appropriate, don't repeat responses, and add some variety your responses)", 60).then(res => {
+            
+                                res.json().then(json => {
+                                    
+                                    var botRes = (json.choices != undefined && json.choices.length > 0) ? (json.choices[0].text.replaceAll("\n", "")) : ("I don't have a response to that.");
+    
+                                    if (botRes != "") {
+                                        msg.reply(botRes);
+                                    }
+                    
+                                    saveMsg(`user`, userMsg);
+                                    saveMsg(`bot`, botRes);
+            
+                                    CONV_COLLECTION.findOneAndReplace({
+                                        "userId": msg.author.id
+                                    }, {
+                                        "userId": msg.author.id, 
+                                        "conversationHistory": conversationHistory, 
+                                        "lastConversation": Date.now()
+                                    })
+                    
+                                })
+                            })
+                            
+                        })
+    
                     })
-
+                    
                 })
-                
-            })
+    
+            }
 
-        }
+        })
+
     })
 }
 
