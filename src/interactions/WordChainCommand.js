@@ -12,7 +12,7 @@ module.exports = class WordChainCommand extends SlashCommand {
   constructor() {
     super(new SlashCommandBuilder()
     .setName("wordchain")
-    .setDescription("Play the word chain game!")
+    .setDescription("Play the word chain game! :chains:")
     
     .addSubcommand(subcommand => {
       return subcommand
