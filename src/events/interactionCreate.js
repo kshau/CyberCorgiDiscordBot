@@ -19,17 +19,25 @@ module.exports = class InteractionCreateEvent extends BaseEvent {
     
     try {
 
-      WORD_CHAIN_COLLECTION.findOne({channelId: interaction.channel.id}).then(res => {
+      if (interaction.channel == undefined) {
+        interaction.reply(message("**You must be on a server to start a word chain game! :dog2:**", true));
+      }
 
-        if (res == null || interaction.commandName == "wordchain") {
-          command.run(client, interaction);
-        }
+      else {
 
-        else {
-          interaction.reply(message("**You can't run commands in a channel with an active word chain game! :dog2:**", true));
-        }
+        WORD_CHAIN_COLLECTION.findOne({channelId: interaction.channel.id}).then(res => {
 
-      })
+          if (res == null || interaction.commandName == "wordchain") {
+            command.run(client, interaction);
+          }
+  
+          else {
+            interaction.reply(message("**You can't run commands in a channel with an active word chain game! :dog2:**", true));
+          }
+  
+        })
+
+      }
 
     } catch (error) {
       console.error(error);

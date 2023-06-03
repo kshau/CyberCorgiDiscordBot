@@ -11,14 +11,14 @@ function wordChain(client) {
 
     client.on("messageCreate", msg => {
 
-        if (!msg.author.bot) {
+        if (!msg.author.bot && msg.content != "" && msg.content.startsWith("-")) {
 
             WORD_CHAIN_COLLECTION.findOne({channelId: msg.channel.id}).then(res => {
 
                 if (res != null) {
 
                     var wordEntries = res.wordEntries;
-                    var formattedWord = msg.content.split(" ")[0].toLowerCase();
+                    var formattedWord = msg.content.split(" ")[0].toLowerCase().substring(1);
 
                     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${formattedWord}`).then(res2 => {
     

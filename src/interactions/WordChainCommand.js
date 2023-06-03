@@ -55,7 +55,7 @@ module.exports = class WordChainCommand extends SlashCommand {
 
             var embed = {
               title: "Word Chain Game", 
-              description: `**The word chain game has started in this channel! You must say a word, and the next person must say another word starting with the last letter of the previous word. Only one person can go at a time, and no word repetitions allowed.**
+              description: `**The word chain game has started in this channel! You must say a word, and the next person must say another word starting with the last letter of the previous word. Only one person can go at a time, and no word repetitions allowed. Put a \`-\` before your word to have it register.**
               
               **:white_check_mark: = Word is valid; your word should start with the last letter of only these words**
               **:x: = Word is invalid, doesn't follow last letter rule, or you have gone twice in one turn**
