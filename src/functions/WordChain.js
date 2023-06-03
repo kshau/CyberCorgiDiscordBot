@@ -10,7 +10,7 @@ function wordChain(client) {
 
     client.on("messageCreate", msg => {
 
-        if (!msg.author.bot && msg.content != "" && msg.content.startsWith("-")) {
+        if (!msg.author.bot && msg.content.length >= 2 && msg.content.startsWith("-")) {
 
             WORD_CHAIN_COLLECTION.findOne({channelId: msg.channel.id}).then(res => {
 
