@@ -3,10 +3,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 
 const {fetch} = require("undici");
 
-const {database} = require("../utils/dbManager");
+const {CAPITAL_GUESS_COLLECTION} = require("../utils/dbManager");
 const { message } = require('../utils/messages');
-
-const CAPITAL_GUESS_COLLECTION = database.collection("capital_guess");
 
 function formatCapitalName(name) {
   if (name == undefined) {

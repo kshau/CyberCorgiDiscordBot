@@ -13,4 +13,8 @@ const client = new MongoClient(MONGO_DB_CONNECT, {
 client.connect();
 const database = client.db("CyberCorgi");
 
-module.exports = {database};
+const WORD_CHAIN_COLLECTION = database.collection("word_chain");
+const CAPITAL_GUESS_COLLECTION = database.collection("capital_guess");
+const CONV_COLLECTION = database.collection("ai_conversations");
+
+module.exports = {WORD_CHAIN_COLLECTION, CAPITAL_GUESS_COLLECTION, CONV_COLLECTION};

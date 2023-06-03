@@ -1,5 +1,4 @@
-const {database} = require("../utils/dbManager");
-const WORD_CHAIN_COLLECTION = database.collection("word_chain");
+const {WORD_CHAIN_COLLECTION} = require("../utils/dbManager");
 const {fetch} = require("undici");
 const { message } = require("../utils/messages");
 

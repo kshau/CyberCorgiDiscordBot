@@ -1,12 +1,10 @@
 const SlashCommand = require('../utils/structures/SlashCommand');
 const { SlashCommandBuilder } = require("@discordjs/builders")
 
-const {database} = require("../utils/dbManager");
+const {WORD_CHAIN_COLLECTION} = require("../utils/dbManager");
 const { message } = require('../utils/messages');
 
 const {EMBED_COLOR} = process.env;
-
-const WORD_CHAIN_COLLECTION = database.collection("word_chain");
 
 module.exports = class WordChainCommand extends SlashCommand {
   constructor() {

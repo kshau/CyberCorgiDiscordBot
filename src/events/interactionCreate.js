@@ -1,8 +1,6 @@
 const { message } = require("../utils/messages");
 const BaseEvent = require("../utils/structures/BaseEvent");
-const {database} = require("../utils/dbManager");
-
-const WORD_CHAIN_COLLECTION = database.collection("word_chain");
+const {WORD_CHAIN_COLLECTION} = require("../utils/dbManager");
 
 module.exports = class InteractionCreateEvent extends BaseEvent {
   constructor() {
