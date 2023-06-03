@@ -57,7 +57,7 @@ module.exports = class WordChainCommand extends SlashCommand {
               
               **:white_check_mark: = Word is valid; your word should start with the last letter of only these words**
               **:x: = Word is invalid, doesn't follow last letter rule, or you have gone twice in one turn**
-              **:regional_indicator_r: = Word has already been used; you still have a turn**
+              **:regional_indicator_r: = Word has already been used; your word didn't register**
 
               **Enjoy! :chains:**
               `, 
