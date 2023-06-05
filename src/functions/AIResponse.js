@@ -1,5 +1,6 @@
 const { ChatGPTResponder } = require("../utils/ChatGPTResponder")
-const {WORD_CHAIN_COLLECTION, CONV_COLLECTION} = require("../utils/dbManager")
+const {WORD_CHAIN_COLLECTION, CONV_COLLECTION} = require("../utils/dbManager");
+const { message } = require("../utils/messages");
 
 const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     My name is CyberCorgi. 

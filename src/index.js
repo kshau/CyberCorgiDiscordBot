@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, Constants } = require('discord.js');
 const { registerCommands, registerEvents, registerSlashCommands } = require('./utils/registry');
 const { aiResponse } = require("./functions/AIResponse");
 const { wordChain } = require("./functions/WordChain");
@@ -23,11 +23,13 @@ const client = new Client({
   await registerSlashCommands(client, '../interactions')
 
   process.on("uncaughtException", (err) => {
-    console.log("Error: " + err.message);
+    console.error("Error: " + err.message);
   })
 
   process.on("unhandledRejection", (err) => {
-    console.log("Error: " + err.message);
+    if (err.code != Constants.APIErrors.MISSING_ACCESS && err.code != Constants.APIErrors.MISSING_PERMISSIONS) {
+      console.error("Error: " + err.message);
+    }
   })
   
   await client.login(process.env.TOKEN);

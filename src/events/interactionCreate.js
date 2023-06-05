@@ -17,7 +17,7 @@ module.exports = class InteractionCreateEvent extends BaseEvent {
     
     try {
 
-      if (interaction.channel == undefined) {
+      if (interaction.channel == undefined && interaction.commandName == "wordchain") {
         interaction.reply(message("**You must be on a server to start a word chain game! :dog2:**", true));
       }
 
@@ -37,8 +37,8 @@ module.exports = class InteractionCreateEvent extends BaseEvent {
 
       }
 
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       await interaction.reply(message("**An unknown error occured! :dog2:**", true));
     }
   }
