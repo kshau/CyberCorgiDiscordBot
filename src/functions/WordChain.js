@@ -5,7 +5,6 @@ const Filter = require('bad-words');
 
 const CHECK_MARK_EMOJI = "\u2705";
 const X_EMOJI = "\u274C";
-const R_EMOJI = "\uD83C\uDDF7";
 
 var profFilter = new Filter();
 
@@ -34,7 +33,7 @@ function wordChain(client) {
                             var incorrectMsg;
 
                             if (res.wordEntries.some((item) => item.word == formattedWord)) {
-                                msg.react(R_EMOJI);
+                                msg.reply(message(`**Word has already been said! Start from \`${prevWord}\`! :dog2:**`));
                             }
         
                             else if (title == "No Definitions Found" || profFilter.isProfane(formattedWord)) {
