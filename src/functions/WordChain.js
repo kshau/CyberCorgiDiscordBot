@@ -1,10 +1,13 @@
 const {WORD_CHAIN_COLLECTION} = require("../utils/dbManager");
 const {fetch} = require("undici");
 const { message } = require("../utils/messages");
+const Filter = require('bad-words');
 
 const CHECK_MARK_EMOJI = "\u2705";
 const X_EMOJI = "\u274C";
 const R_EMOJI = "\uD83C\uDDF7";
+
+var profFilter = new Filter();
 
 function wordChain(client) {
 
@@ -34,7 +37,7 @@ function wordChain(client) {
                                 msg.react(R_EMOJI);
                             }
         
-                            else if (title == "No Definitions Found") {
+                            else if (title == "No Definitions Found" || profFilter.isProfane(formattedWord)) {
                                 incorrectMsg = `<@${msg.author.id}> ruined it by saying an invalid word!`;
                             }
 
