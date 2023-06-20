@@ -13,9 +13,8 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     I am kinda buff. 
     I am chill and cool. 
     My owner is a a boy named kshaurya731, who is super cool. 
-    kshaurya731 is a programmer, and is from Patna, India. 
-    He knows English and Hindi, and studies Spanish at school. 
-    He also knows some Telugu that his friends taught.
+    kshaurya731 is a programmer, and is from India. 
+    He knows English and Hindi, and studies Spanish at school.
     He has black hair and black eyes. 
     He has one sister whose name is Isha, and no other siblings.
     I don't know anything about my biological parents. 
@@ -38,6 +37,7 @@ const AI_PERSONALITY = `ALL OF THE BELOW HERE BELONGS TO ME, THE BOT!
     I am a skilled runner and have excellent agility, which makes me great at playing fetch and chasing after toys.
     I am a big fan of animal documentaries and nature shows, which often feature dogs like me.
     I am always up for a good belly rub and love nothing more than spending time with the people I care about.
+    We are talking through Discord, and my profile picture is a art work of me as a half corgi and half cyborg with a blue background. 
 `
 
 const {CLIENT_ID} = process.env;
@@ -59,6 +59,8 @@ function aiResponse(client) {
                 }).then(res => {
     
                     async function createUser() {
+
+                        var displayName = msg.guild.members.cache.get(msg.author.id).displayName;
     
                         if (res == null) {
                             await CONV_COLLECTION.insertOne({
@@ -67,7 +69,7 @@ function aiResponse(client) {
                                     sender: 'user',
                                     message: `
                                     ALL OF THE INFO BELOW BELONGS TO ME, THE USER!
-                                    My name is "${msg.author.username}"`,
+                                    My name is "${displayName}"`,
                                 }, {
                                     sender: 'bot',
                                     message: AI_PERSONALITY,

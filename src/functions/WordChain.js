@@ -36,7 +36,7 @@ function wordChain(client) {
                                 msg.reply(message(`**Word has already been said! Start from \`${prevWord}\`! :dog2:**`));
                             }
         
-                            else if (title == "No Definitions Found" || profFilter.isProfane(formattedWord)) {
+                            else if (title == "No Definitions Found" || profFilter.isProfane(formattedWord) || (formattedWord.length < 2 && !(formattedWord == "a" || formattedWord == "i"))) {
                                 incorrectMsg = `<@${msg.author.id}> ruined it by saying an invalid word!`;
                             }
 

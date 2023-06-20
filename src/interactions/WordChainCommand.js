@@ -6,6 +6,19 @@ const { message } = require('../utils/messages');
 
 const {EMBED_COLOR} = process.env;
 
+var instructionEmbed = {
+  title: "Word Chain Game", 
+  description: `**This is the word chain game! You must say a word, and the next person must say another word starting with the last letter of the previous word. Only one person can go at a time, and no word repetitions or single letters allowed (except \`a\` or \`I\`). Put a \`-\` before your word to have it register.**
+  
+  **:white_check_mark: = Word is valid; your word should start with the last letter of only these words**
+  **:x: = Word is invalid, doesn't follow last letter rule, or you have gone twice in one turn**
+
+  **Enjoy! :chains:**
+  `, 
+
+  color: EMBED_COLOR
+};
+
 module.exports = class WordChainCommand extends SlashCommand {
   constructor() {
     super(new SlashCommandBuilder()
@@ -29,6 +42,12 @@ module.exports = class WordChainCommand extends SlashCommand {
         .setName("wordcount")
         .setDescription("Shows the number of valid words in this round.")
     })
+
+    .addSubcommand(subcommand => {
+      return subcommand
+        .setName("howtoplay")
+        .setDescription("Shows you how to play the word chain game.")
+    })
     
     );
   }
@@ -51,20 +70,7 @@ module.exports = class WordChainCommand extends SlashCommand {
               wordEntries: []
             })
 
-            var embed = {
-              title: "Word Chain Game", 
-              description: `**The word chain game has started in this channel! You must say a word, and the next person must say another word starting with the last letter of the previous word. Only one person can go at a time, and no word repetitions allowed. Put a \`-\` before your word to have it register.**
-              
-              **:white_check_mark: = Word is valid; your word should start with the last letter of only these words**
-              **:x: = Word is invalid, doesn't follow last letter rule, or you have gone twice in one turn**
-
-              **Enjoy! :chains:**
-              `, 
-
-              color: EMBED_COLOR
-            };
-
-            interaction.reply({embeds: [embed]});
+            interaction.reply({embeds: [instructionEmbed]});
           }
 
           else {
@@ -129,6 +135,10 @@ module.exports = class WordChainCommand extends SlashCommand {
 
       })
 
+    }
+
+    else if (subcommand == "howtoplay") {
+      interaction.reply({embeds: [instructionEmbed], ephemeral: true});
     }
 
   }
