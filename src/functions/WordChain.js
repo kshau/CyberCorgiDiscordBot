@@ -19,7 +19,7 @@ function wordChain(client) {
                 if (res != null) {
 
                     var wordEntries = res.wordEntries;
-                    var formattedWord = msg.content.split(" ")[0].toLowerCase().substring(1);
+                    var formattedWord = msg.content.split(" ")[0].toLowerCase().replace(/[^a-z0-9]/gi, '');
 
                     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${formattedWord}`).then(res2 => {
     
